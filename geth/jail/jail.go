@@ -127,7 +127,7 @@ func (jail *Jail) Call(chatID string, path string, args string) string {
 	}
 	jail.RUnlock()
 
-	vm := cell.CellVM().Copy() // isolate VM to allow concurrent access
+	vm := cell.CellVM()
 	res, err := vm.Call("call", nil, path, args)
 
 	return makeResult(res.String(), err)

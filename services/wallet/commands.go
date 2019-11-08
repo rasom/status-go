@@ -47,6 +47,11 @@ func (c *ethHistoricalCommand) Run(ctx context.Context) (err error) {
 	defer cancel()
 	concurrent := NewConcurrentDownloader(ctx)
 	start := time.Now()
+	minFrom := new(big.Int).Sub(c.from, big.NewInt(60000))
+	from := c.from
+	if from.Cmp(minFrom) == -1 {
+		from = minFrom
+	}
 	downloadEthConcurrently(concurrent, c.client, c.eth, c.address, c.from, c.to)
 	select {
 	case <-concurrent.WaitAsync():

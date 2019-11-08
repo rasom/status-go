@@ -52,7 +52,7 @@ func (c *ethHistoricalCommand) Run(ctx context.Context) (err error) {
 	if from.Cmp(minFrom) == -1 {
 		from = minFrom
 	}
-	downloadEthConcurrently(concurrent, c.client, c.eth, c.address, c.from, c.to)
+	downloadEthConcurrently(concurrent, c.client, c.eth, c.address, from, c.to)
 	select {
 	case <-concurrent.WaitAsync():
 	case <-ctx.Done():
